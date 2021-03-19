@@ -82,7 +82,7 @@ class ReshapeTool():
 ## -------------------
 ##  Preparation
 
-def process_video(style_img, input_video, interval = 8, write_frames_to_disk = False):
+def process_video(style_img, input_video, interval = 8, write_frames_to_disk = False, force_on_CPU = False):
 
     start_time_process = time.monotonic()
 
@@ -119,6 +119,10 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
     # TODO! Here you are reading in the pretrained weights from "checkpoint_path", and you could add noise to the
     #  pretrained weights, either once when reading them, or in the loop when stylizing images if you just want glitchy
     #  noise output and the output does not have to be that realistic
+    if force_on_CPU:
+        print('Force computations to be done with CPU instead of GPU (e.g. you have more system RAM than GPU RAM,'
+              'and you are willing to wait a bit more for computations)')
+        cuda = False
     framework = Stylization(checkpoint_path, cuda, use_Global)
     framework.prepare_style(style)
     end_time = time.monotonic()
@@ -265,6 +269,8 @@ if __name__ == "__main__":
                         help="Affects the number of frames needed for 'Sequence-Level Global Feature Sharing', "
                              "i.e. can make your RAM run out if too small (make maybe automatic at point, default was = 8),"
                              "but if you large videos with big resolutions, you might need to ")
+    parser.add_argument('-force_on_CPU', '--force_on_CPU', type=bool, default=False,
+                        help='Process on CPU instead of GPU')
     args = parser.parse_args()
 
     # Define what video files we are going to process
@@ -297,7 +303,8 @@ if __name__ == "__main__":
             process_video(style_img = style_file,
                           input_video = video_file,
                           interval = args.interval,
-                          write_frames_to_disk = args.write_frames_to_disk)
+                          write_frames_to_disk = args.write_frames_to_disk,
+                          force_on_CPU = args.force_on_CPU)
 
     # TODO! you could do a "style_dir" here, so that you process the same video with multiple styles in a loop
     #  i.e. you have a 50 style imgs on a folder and you do not know which works, and you could have the processing

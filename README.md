@@ -54,10 +54,6 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-#### CPU (for slower processing if you do not have GPU)
-
-TODO! this is now tested in a GPU system
-
 ## Using the repository to style your image
 
 In machine learning jargon, you are now "testing" your model (running inference) after you initially trained it with a bunch of examples. If you just to want to quickly style your videos, you do not care about the training part of the code.
@@ -101,8 +97,17 @@ Then, you can find stylized video in `./results/videos/`.
 With these optional setting, the inference call would look like:
 
 ```
-cd test
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4 --interval 16
+```
+
+#### CPU Processing
+
+If you run out of GPU memory, or you have some issues with CUDA, you can force the computations to be done with CPU, makes things a lot slower as well. 
+
+On `i7-7700K CPU @ 4.20GHz` ~1.30 frames are stylized per second compared to ~30 frames per second with [`NVIDIA RTX 2070 Super 8GB`](https://timdettmers.com/2020/09/07/which-gpu-for-deep-learning/), i.e. stylizing a ~9sec video takes 3 min 20 sec on CPU, and around ~9seconds on a GPU. So definitely get a machine with a GPU if you plan to do these a lot :)
+
+```
+python generate_real_video.py --style_img ../inputs/styles/huygens_multiphoton_embryo.png --input_video ../inputs/video/scatman.mp4 --force_on_CPU True
 ```
 
 ### Processing time
