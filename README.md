@@ -10,9 +10,9 @@ Project Website: https://daooshee.github.io/ReReVST/ - https://github.com/daoosh
 
 This repo is a "wrapper repo" basically making the code a bit easier to run, if you for example want to quickly make artistic video style transfer and don't want to wrestle with the code forever. 
 
-* Added virtual environment
-* Removed the need to do the mp4 -> png conversion as it got a bit annoying
-* Original repository did not keep audio, so if you want stylize your own videos, you most likely want to keep the original audio track. TODO! actually written now as separate .mp3, combine with output mp4 eventually
+* Added virtual environment to make the work _a bit more_ reproducible
+* Removed the need to do the mp4 -> png conversion as it got a bit annoying. No the inputs are just whatever video files that `imageio ffmpeg` supports
+* Original repository did not keep audio at all, which was annoying if you wanted to stylize videos with audio tracks. This now handled with `MoviePy`
 
 ### Pre-prerequisites to get this code working on your machine
 
@@ -33,7 +33,7 @@ Download `style_net-TIP-final.pth` [~60MB] from the links provided by the author
 
 Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ3siGIOwUc-Ycu8?usp=sharing), [Baidu Pan](https://pan.baidu.com/s/1Td30bukn2nc4zepmSDs1mA) [397w]
 
-And place to `test/Model`
+And place this `.pth` file to `test/Model`
 
 ### Virtual environment (on which you run the code)
 
@@ -66,6 +66,28 @@ To test the code with the default values and examples given by the paper
 
 ```
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
+```
+
+### Batch Processing
+
+You probably do not know that well how different style images in the end will be transferred to the video, so you can copy all possible images that you could want to test to a single folder (e.g. `inputs/styles/`), and do something else while you get the results.
+
+You can batch stylize a bunch of videos with a single style:
+
+```
+python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video_dir ../inputs/video/
+```
+
+Single video file with multiple styles:
+
+```
+python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video ../inputs/video/scatman.mp4
+```
+
+Bunch of videos with multiple styles:
+
+```
+python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video_dir ../inputs/video/
 ```
 
 ### Optional settings

@@ -116,6 +116,9 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
 
     # Build model
     start_time = time.monotonic()
+    # TODO! Here you are reading in the pretrained weights from "checkpoint_path", and you could add noise to the
+    #  pretrained weights, either once when reading them, or in the loop when stylizing images if you just want glitchy
+    #  noise output and the output does not have to be that realistic
     framework = Stylization(checkpoint_path, cuda, use_Global)
     framework.prepare_style(style)
     end_time = time.monotonic()
@@ -169,11 +172,14 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
 
     # Main stylization
     video_path_out = os.path.join(result_videos_path, name)
-    writer = imageio.get_writer(video_path_out, fps=fps)
+    video_path_out_raw = os.path.join(result_videos_path, name + '_1stPassWithoutAudio.mp4')
+    writer = imageio.get_writer(video_path_out_raw, fps=fps)
 
     # go through the video frames
     start_time = time.monotonic()
     print('Applying style transfer to the video')
+    # TODO! update this loop to MoviePy world at some point and not use imageio in the loop
+    #  to get rid of the unnecessary disk writes that start to slow down things especially on large clips
     for i, frame in tqdm(enumerate(video)):
 
         # Crop the image
@@ -181,10 +187,16 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
         new_input_frame = reshape.process(frame)
 
         # Stylization
+        # TODO! You could redefine the framework for each frame if you are up for glitch for the sake of glitch
         styled_input_frame = framework.transfer(new_input_frame)
 
         # Crop the image back
         styled_input_frame = styled_input_frame[64:64+H,64:64+W,:]
+
+        # TODO! here you have the stylized frame, "styled_input_frame" and you could add some effects to it
+        #  note! that as the whole paper was about temporally coherent style transfer, you could be possibly now
+        #  introducing time-varying effects (flickering frames). If this is visually okay for artistic reasons for
+        #  you, then this is of course nice
 
         # cast as unsigned 8-bit integer (not necessarily needed)
         styled_input_frame = styled_input_frame.astype('uint8')
@@ -197,10 +209,27 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
     end_time = time.monotonic()
     print('Video style transferred in {}'.format(timedelta(seconds=end_time - start_time)))
 
-    audio_path_out = video_path_out.replace('mp4', 'mp3')
-    print('writing audio (quick and dirty solution) to disk as separate .mp3 (TODO! combine with the video and get rid of this extra step)')
-    print(' path for audio = {}'.format(audio_path_out))
-    my_clip.audio.write_audiofile(audio_path_out)
+    # Now we read the saved .mp4 back to memory and update its audio file
+    # TODO! A bit I/O overhead and needless writing, but this repo started with imageio-ffmpeg, and apparently there
+    #  is no audio processing? One could do command-line calls for ffmpeg to join the .mp3 as well, but maybe this
+    #  Python-only solution is a bit easier?
+
+    # https://stackoverflow.com/a/48866634
+    # https://www.programcreek.com/python/example/105718/moviepy.editor.VideoFileClip
+    print('Reading back the video as the audio was lost, and updating the audio to MP4 with MoviePy')
+    start_time = time.monotonic()
+    saved_mp4_read_back = mp.VideoFileClip(video_path_out_raw)
+    final_clip = saved_mp4_read_back.set_audio(audio_track)
+    final_clip.write_videofile(video_path_out, fps=fps, verbose=False, logger=None)
+    remove_status = os.remove(video_path_out_raw)
+    end_time = time.monotonic()
+    print(' TODO! this quick n dirty audio fix added {} seconds of I/O overhead'.format(timedelta(seconds=end_time - start_time)))
+
+    # to write just the audio
+    #audio_path_out = video_path_out.replace('mp4', 'mp3')
+    #print('writing audio (quick and dirty solution) to disk as separate .mp3 (TODO! combine with the video and get rid of this extra step)')
+    #print(' path for audio = {}'.format(audio_path_out))
+    #my_clip.audio.write_audiofile(audio_path_out)
 
     if write_frames_to_disk:
 
@@ -222,8 +251,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Training of segmentation model for sCROMIS2ICH dataset')
     parser.add_argument('-style_img', '--style_img', type=str, default='../inputs/styles/620ef3a5cd28cd75b742341cc8433eb8.jpg',
                         help='Style img (e.g. jpeg or png)')
-    parser.add_argument('-input_video', '--input_video', type=str, default='../inputs/video/scatman.mp4',
+    parser.add_argument('-style_img_dir', '--style_img_dir', type=str,
+                        default=None, #'../inputs/styles/',
+                        help='Directory of all your style images (so you can batch stylize one video with multiple styles and see which you like)')
+    parser.add_argument('-input_video', '--input_video', type=str, default=None, #'../inputs/video/scatman.mp4',
                         help='Video input that you want to style (e.g. MP4)')
+    parser.add_argument('-input_video_dir', '--input_video_dir', type=str,
+                        default='../inputs/video/',
+                        help='Directory of all your videos to be stylized (batch processing multiple videos)')
     parser.add_argument('-write_frames_to_disk', '--write_frames_to_disk', type=bool, default=False,
                         help='Writes the frames to disk as well')
     parser.add_argument('-interval', '--interval', type=int, default=8,
@@ -232,13 +267,54 @@ if __name__ == "__main__":
                              "but if you large videos with big resolutions, you might need to ")
     args = parser.parse_args()
 
-    process_video(style_img = os.path.join(DIR_PATH, args.style_img),
-                  input_video = os.path.join(DIR_PATH, args.input_video),
-                  interval = args.interval,
-                  write_frames_to_disk = args.write_frames_to_disk)
+    # Define what video files we are going to process
+    if not args.input_video_dir:
+        print('Processing a single video file in non-batch mode')
+        video_files = [os.path.join(DIR_PATH, args.input_video)]
+    else:
+        wildcard = '*.*'  # TODO! all supported video formats here, depends on MoviePy, ImageIo, ffmpeg now
+        full_video_path = os.path.join(DIR_PATH, args.input_video_dir, wildcard)
+        print('Processing all the video files found from {}'.format(full_video_path))
+        video_files = sorted(glob.glob(full_video_path))
+        print(' found a total of {} video files to be processed'.format(len(video_files)))
+
+    # Define what style images we are going to use for the videos
+    if not args.style_img_dir:
+        print('Using a single style image for all the videos, or for the single video')
+        style_files = [os.path.join(DIR_PATH, args.style_img)]
+    else:
+        wildcard = '*.*'  # TODO! all supported image formats here, depends on MoviePy, ImageIo, ffmpeg now
+        full_style_path = os.path.join(DIR_PATH, args.style_img_dir, wildcard)
+        style_files = sorted(glob.glob(full_style_path))
+        print('Using all the style images found from {}'.format(args.style_img_dir))
+        print(' found a total of {} style images'.format(len(style_files)))
+
+    # PROCESS
+    for i, video_file in enumerate(video_files):
+        for j, style_file in enumerate(style_files):
+
+            print('\nVideo file #{}/{}, style file #{}/{}'.format(i+1, len(video_files), j+1, len(style_files)))
+            process_video(style_img = style_file,
+                          input_video = video_file,
+                          interval = args.interval,
+                          write_frames_to_disk = args.write_frames_to_disk)
 
     # TODO! you could do a "style_dir" here, so that you process the same video with multiple styles in a loop
     #  i.e. you have a 50 style imgs on a folder and you do not know which works, and you could have the processing
     #  run like overnight, and see the results in the morning
 
     # TODO! similarly you could have multiple input video(s), and you batch process them with multiple style imgs
+
+    # NOTE! If you are unhappy with the style transfer results and they are not cool enough for you, then you should
+    #  try retraining this architecture with your own data, explore other pretrained frameworks, or you can always
+    #  try to do something glitchy in the loop / in combination with the style transfer if you are not too picky
+    #  about doing style transfer per se, but you just want interesting visuals
+
+    # TODO! You could experiment with denoising, see paper by Lin et al. (2020) on the effects of high spatial frequencies
+    #  on style transfer https://arxiv.org/abs/2011.14477 (6.2. The Role of High Frequency Signals)    #
+    #  (e.g. old school algorithms BM3D for images, and VBM3D for video, or some recent deep learning based denoising algorithms, see e.g.
+    #  https://github.com/wenbihan/reproducible-image-denoising-state-of-the-art
+    #  https://github.com/flyywh/Image-Denoising-State-of-the-art
+    #  noise2noise -> all its upgrades -> e.g. self2self, noise2void, Neighbor2Neighbor
+    #  VIDEO: Self-supervised training for blind multi-frame video denoising / Unsupervised Deep Video Denoising
+    #   https://sreyas-mohan.github.io/udvd/ / https://arxiv.org/abs/2011.15045
