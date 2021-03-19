@@ -1,86 +1,105 @@
-### Consistent Video Style Transfer via Relaxation and Regularization 
+# Consistent Video Style Transfer via Relaxation and Regularization 
+
+Original project from
 
 Wenjing Wang, Shuai Yang, Jizheng Xu, and Jiaying Liu. "Consistent Video Style Transfer via Relaxation and Regularization", IEEE Trans. on Image Processing (TIP), 2020.
 
-Project Website: https://daooshee.github.io/ReReVST/
+Project Website: https://daooshee.github.io/ReReVST/ - https://github.com/daooshee/ReReVST-Code
 
+## Petteri's notes
 
+This repo is a "wrapper repo" basically making the code a bit easier to run, if you for example want to quickly make artistic video style transfer and don't want to wrestle with the code forever. 
 
-##### Prerequisites
+* Added virtual environment
+* Removed the need to do the mp4 -> png conversion as it got a bit annoying
+* Original repository did not keep audio, so if you want stylize your own videos, you most likely want to keep the original audio track. TODO! actually written now as separate .mp3, combine with output mp4 eventually
 
-* torch
-* torchvision
-* scipy
-* numpy
-* opencv-python-headless
+### Pre-prerequisites to get this code working on your machine
 
+* Install [Anaconda3](https://www.anaconda.com/products/individual#windows) ([installation instructions](https://docs.anaconda.com/anaconda/install/windows/))
+* Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), if you are `pull`ing this repo (you could just download the zip as well if you really do not know what this is)
+* GO to terminal / command window here and execute the commands from there
 
+### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
 
-#### 1. Training Code
-
-```
-cd ./train
-```
-
-##### 1.1 Data preparation
-
-Download style images ([WikiArt.org](https://www.wikiart.org/) or [Painter by Numbers from Kaggle](https://www.kaggle.com/c/painter-by-numbers)) in `./data/style/`:
-```
-./data/style/1.jpg
-./data/style/2.jpg
-....
-./data/style/99.jpg 
+```bash
+git clone https://github.com/petteriTeikari/ReReVST-Code
+cd ReReVST-Code
 ```
 
-Download content images ([MSCOCO](https://cocodataset.org)) in `./data/content/`:
-```
-./data/content/COCO_train2014_000000000000.jpg
-./data/content/COCO_train2014_000000000001.jpg
-....
-./data/content/COCO_train2014_000000000099.jpg 
-```
+### Get the pretrained model
 
-##### 1.2 Training
-
-Directly training the model with all the loss terms is hard, so we gradually add the loss terms and adjust the hyper-parameters.
-
-The script below is based on a half pre-trained `style_net-epoch-0.pth`. If you are interested in training from scratch, please refer to the Supplementary Material, Sec. I. B. for detailed parameter settings.
-
-**1.2.1 Download half pre-trained model**
-
-Download the half pre-trained model and replace the empty `style_net-epoch-0.pth`.
+Download `style_net-TIP-final.pth` [~60MB] from the links provided by the authors of the original repo:
 
 Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ3siGIOwUc-Ycu8?usp=sharing), [Baidu Pan](https://pan.baidu.com/s/1Td30bukn2nc4zepmSDs1mA) [397w]
 
-**1.2.2 Training**
+And place to `test/Model`
 
-Please refer to `train.py` for the meaning of each parameter.
+### Virtual environment (on which you run the code)
 
-```
-python3 train.py --cuda --gpu 0 --epoches 2 --batchSize 4 --lr 1e-4 --dynamic_filter --both_sty_con --relax_style --style_content_loss --contentWeight 1 --recon_loss --tv_loss --temporal_loss --data_sigma --data_w
-```
+If you do not know what this, you could check for example [Python Virtual Environments: A Primer
+](https://realpython.com/python-virtual-environments-a-primer/) or [What Virtual Environments Are Good For
+](https://realpython.com/lessons/what-virtual-environments-are-good-for/)
 
+#### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
-
-#### 2. Testing Code
-
-```
-cd ./test
-```
-
-##### 2.1 Download model
-
-Download our final model and replace the empty `style_net-TIP-final.pth`.
-
-Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ3siGIOwUc-Ycu8?usp=sharing), [Baidu Pan](https://pan.baidu.com/s/1Td30bukn2nc4zepmSDs1mA) [397w]
-
-##### 2.2 Inference
-
-In `generate_real_video.py`, set the path of the style image by `style_img`, and set the path to the video frames by `content_video`, and run:
+Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time
 
 ```
-python generate_real_video.py
+python3.6 -m venv rerevst_venv
+source rerevst_venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-Then, you can find stylized videos in `./result_frames/` and `./result_videos/`. When writing the final video, the frames will be sorted by their names (using  `sort()` in python).
+#### CPU (for slower processing if you do not have GPU)
 
+TODO! this is now tested in a GPU system
+
+## Using the repository to style your image
+
+In machine learning jargon, you are now "testing" your model (running inference) after you initially trained it with a bunch of examples. If you just to want to quickly style your videos, you do not care about the training part of the code.
+
+`generate_real_video.py` styles your input video defined in `--input_video` based on the style in an image `--style_img`.
+
+To test the code with the default values and examples given by the paper
+
+```
+python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
+```
+
+### Optional settings
+
+Additionally there is an `interval` flag that you can increase to `16`, `32` if you run out of RAM (if you high-res or/and long videos). Depends on your laptop/desktop on how much lifting you can do.
+
+Then, you can find stylized video in `./results/videos/`.
+
+With these optional setting, the inference call would look like:
+
+```
+cd test
+python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4 --interval 16
+```
+
+### Processing time
+
+Depending on your hardware, the actual style transfer can happen around in real-time (NVIDIA 2070 Super), ~9sec video took ~9sec to process with the model building and global feature sharing taking some time too:
+
+```
+Opened style image "3d_4.jpg"
+Opened input video "scatman.mp4" for style transfer (fps = 30.0)
+Stylization Model built in 0:00:07.734979
+Preparations finished in 0:00:03.043060!
+Video style transferred in 0:00:08.868579
+Prcessing as a whole took 0:00:19.874647
+```
+
+### On how to train the model with your custom data
+
+See the original repository https://github.com/daooshee/ReReVST-Code for instructions
+
+### Raising [an issue](https://www.stevejgordon.co.uk/working-on-your-first-github-issue)
+
+This repo released pretty much as it is to make casual video style transfer a bit easier as many of the repos out there were so poorly documented and were tricky to get running
+
+![An Issue](doc/raise_an_issue.jpg)
