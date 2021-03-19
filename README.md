@@ -12,9 +12,9 @@ Project Website: https://daooshee.github.io/ReReVST/ - https://github.com/daoosh
 
 This repo is a "wrapper repo" basically making the code a bit easier to run, if you for example want to quickly make artistic video style transfer and don't want to wrestle with the code forever. 
 
-* Added virtual environment to make the work _a bit more_ reproducible
-* Removed the need to do the mp4 -> png conversion as it got a bit annoying. No the inputs are just whatever video files that `imageio ffmpeg` supports
-* Original repository did not keep audio at all, which was annoying if you wanted to stylize videos with audio tracks. This now handled with `MoviePy`
+* Added **virtual environment** to make the work _a bit more_ reproducible
+* Removed the need to do the mp4 -> png conversion as it got a bit annoying. No the inputs are just whatever **video files that `imageio ffmpeg` supports**
+* Original repository did not keep **audio** at all, which was annoying if you wanted to stylize videos with audio tracks. This now handled with `MoviePy`
 
 ### Pre-prerequisites to get this code working on your machine
 
