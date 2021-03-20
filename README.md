@@ -123,9 +123,13 @@ On `i7-7700K CPU @ 4.20GHz` ~1.30 frames are stylized per second compared to ~30
 python generate_real_video.py --style_img ../inputs/styles/huygens_multiphoton_embryo.png --input_video ../inputs/video/scatman.mp4 --force_on_CPU True
 ```
 
-### Processing time
+##### Real-time video style transfer?
 
-Depending on your hardware, the actual style transfer can happen around in real-time (NVIDIA 2070 Super), ~9sec video took ~9sec to process with the model building and global feature sharing taking some time too:
+So you could even make this work real-time with a proper GPU if you want to do visuals for a VJ set from a live video feed (e.g. [imageio](https://imageio.readthedocs.io/en/stable/examples.html) supports webcam input with the `<video0>` uri). You can downsample a bit the input video feed for higher processing frame rates.
+
+For example [TouchDesigner](https://derivative.ca/) has the [PyTorchTOP](https://github.com/DBraun/PyTorchTOP) library that you could possibly to use this model in your TouchDesigner project? 
+
+Breakdown of the processing times (Model building only need to be done once when starting your VJ set, and then the preparations probably okay from some initial buffering?):
 
 ```
 Opened style image "3d_4.jpg"
