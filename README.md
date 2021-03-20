@@ -61,13 +61,19 @@ python -c "import torch; print(torch.__version__)"
 
 In machine learning jargon, you are now "testing" your model (running inference) after you initially trained it with a bunch of examples. If you just to want to quickly style your videos, you do not care about the training part of the code.
 
-`generate_real_video.py` styles your input video defined in `--input_video` based on the style in an image `--style_img`.
+`generate_real_video.py` applies style trasnfer for your input video defined in `--input_video` based on the style in an image `--style_img`.
 
-To test the code with the default values and examples given by the paper
+### Test that you got this repository running on your computer
+
+To test the code with the default values and examples given with this repo, 
 
 ```
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
 ```
+
+Output video is saved to [`results/video`](https://github.com/petteriTeikari/ReReVST-Code/tree/master/results/video)
+
+![example of VST](doc/exampleVST.png)
 
 ### Batch Processing
 
