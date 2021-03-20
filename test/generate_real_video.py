@@ -7,7 +7,6 @@ import random
 import time
 from datetime import timedelta
 
-
 from tqdm import tqdm
 
 import argparse
@@ -29,7 +28,7 @@ DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 checkpoint_path = "./Model/style_net-TIP-final.pth"
 
 # Device settings, use cuda if available
-cuda = torch.cuda.is_available()
+
 # device = 'cpu' if args.cpu else 'cuda'
 
 # The proposed Sequence-Level Global Feature Sharing
@@ -119,10 +118,13 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
     # TODO! Here you are reading in the pretrained weights from "checkpoint_path", and you could add noise to the
     #  pretrained weights, either once when reading them, or in the loop when stylizing images if you just want glitchy
     #  noise output and the output does not have to be that realistic
+    cuda = torch.cuda.is_available()
     if force_on_CPU:
         print('Force computations to be done with CPU instead of GPU (e.g. you have more system RAM than GPU RAM,'
               'and you are willing to wait a bit more for computations)')
         cuda = False
+
+    # TODO! you could try to accelerate this with simply making networkdeav fp16?
     framework = Stylization(checkpoint_path, cuda, use_Global)
     framework.prepare_style(style)
     end_time = time.monotonic()
