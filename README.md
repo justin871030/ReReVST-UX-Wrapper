@@ -46,7 +46,7 @@ If you do not know what this, you could check for example [Python Virtual Enviro
 
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
-Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. This is tested on Ubuntu 18.04, but should work on Windows and Mac OS as well?
+Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. 
 
 ```
 python3.8 -m venv rerevst_venv_py38
@@ -57,6 +57,8 @@ pip install -r requirements.txt
 pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
 python -c "import torch; print(torch.__version__)"
 ```
+
+_This is tested on Ubuntu 18.04, but should work on Windows and Mac OS as well? You could try the CPU install `pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html` if you do not have NVIDIA's GPU instead of the `+cu111`_
 
 ## Using the repository to style your image
 
