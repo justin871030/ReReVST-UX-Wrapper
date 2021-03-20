@@ -45,7 +45,7 @@ If you do not know what this, you could check for example [Python Virtual Enviro
 
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
-Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time
+Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. This is tested on Ubuntu 18.04, but should work on Windows and Mac OS as well?
 
 ```
 python3.8 -m venv rerevst_venv_py38
