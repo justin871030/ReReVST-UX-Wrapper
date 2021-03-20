@@ -71,6 +71,7 @@ In machine learning jargon, you are now "testing" your model (running inference)
 To test the code with the default values and examples given with this repo, 
 
 ```
+cd test
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
 ```
 
