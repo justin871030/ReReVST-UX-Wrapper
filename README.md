@@ -97,6 +97,10 @@ Bunch of videos with multiple styles:
 python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video_dir ../inputs/video/
 ```
 
+![example of VST](doc/outputs.png)
+
+_Single video file, batch processed with 4 different style images_
+
 ### Optional settings
 
 Additionally there is an `interval` flag that you can increase to `16`, `32` if you run out of RAM (if you high-res or/and long videos). Depends on your laptop/desktop on how much lifting you can do.
