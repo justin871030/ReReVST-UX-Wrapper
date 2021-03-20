@@ -44,9 +44,10 @@ If you do not know what this, you could check for example [Python Virtual Enviro
 ](https://realpython.com/python-virtual-environments-a-primer/) or [What Virtual Environments Are Good For
 ](https://realpython.com/lessons/what-virtual-environments-are-good-for/)
 
+
+
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
-Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. 
 
 ```
 python3.8 -m venv rerevst_venv_py38
@@ -58,7 +59,53 @@ pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f htt
 python -c "import torch; print(torch.__version__)"
 ```
 
-_This is tested on Ubuntu 18.04, but should work on Windows and Mac OS as well? You could try the CPU install `pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html` if you do not have NVIDIA's GPU instead of the `+cu111`_
+#### PyTorch install
+
+Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. 
+
+Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not
+
+![PyTorch Install](doc/pytorch_install.png)
+
+##### Ubuntu
+
+###### GPU (for CUDA 11.1)
+
+```
+pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+###### CPU
+
+```
+pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+##### Windows
+
+###### GPU (for CUDA 11.1)
+
+```
+pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio===0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+###### CPU
+
+```
+pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio===0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
+```
+
+##### MacOS
+
+###### GPU
+
+You need to [install from PyTorch sources](https://github.com/pytorch/pytorch#from-source), if you want to run this on GPU.
+
+###### CPU
+
+```
+pip install torch torchvision torchaudio
+```
 
 ## Using the repository to style your image
 
