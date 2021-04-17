@@ -8,6 +8,13 @@ Project Website: https://daooshee.github.io/ReReVST/ - https://github.com/daoosh
 
 ![](https://daooshee.github.io/ReReVST/compare_result_video.jpg)
 
+The publication tries to address the issue of "old school" frame-based style transfer techniques that do not take into account the whole video in analysis, which in practice causes annoying "flickering" between successive frames (which might also be appealing visually to some people, up to you)
+
+![image](https://user-images.githubusercontent.com/1060514/115111152-87a3ea80-9f87-11eb-83da-10874d972b4c.png)
+
+_illustrated e.g. by [Characterizing and Improving Stability in Neural Style Transfer
+](https://arxiv.org/abs/1705.02092)_
+
 ## Petteri's notes
 
 This repo is a "wrapper repo" basically making the code a bit easier to run, if you for example want to quickly make artistic video style transfer and don't want to wrestle with the code forever. 
