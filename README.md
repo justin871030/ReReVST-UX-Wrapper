@@ -22,7 +22,7 @@ This repo is a "wrapper repo" basically making the code a bit easier to run, if 
 * Added **virtual environment** to make the work _a bit more_ reproducible
 * Removed the need to do the mp4 -> png conversion as it got a bit annoying. No the inputs are just whatever **video files that `imageio ffmpeg` supports**
 * Original repository did not keep **audio** at all, which was annoying if you wanted to stylize videos with audio tracks. This now handled with `MoviePy`
-* **TODO!** At the moment the workflow does not handle high-resolution videos automagically as you probably very easily run out of RAM when trying to process high-res videos.
+* **TODO!** At the moment the workflow does not handle high-resolution videos automagically as you probably very easily run out of RAM when trying to process high-res videos. The sample video `scatman.mp4` provided with this repo is `256 x 256 px`. If you wanna do HD/4K videos, you probably better just do this with some cloud provider.
 
 ### Pre-prerequisites to get this code working on your machine
 
