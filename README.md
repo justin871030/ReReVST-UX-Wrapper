@@ -38,6 +38,12 @@ Everything is easier on Ubuntu (Linux), but you should get this working on Windo
 
 3) GO to terminal (Ctrl+Alt+T on Ubuntu) / command window ([Anaconda Prompt](https://problemsolvingwithpython.com/01-Orientation/01.03-Installing-Anaconda-on-Windows/) or [Microsoft Command Prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/), i.e. the black window from the [DOS times](https://en.wikipedia.org/wiki/DOS) from last millennium that maybe Gen Z have never heard of) here and execute **all the following commands from there**.
 
+As an illustration, this is how your commands look like (white console now on my Linux)
+
+![](doc/linux_install1.png)
+
+![](doc/linux_install2.png)
+
 ### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
 
 Clone in `git` jargon refers to downloading this to your computer, so you will get this `ReReVST-UX-Wrapper` to your computer to the path that you execute the `git clone` from (e.g. if you are on `(base) C:\Users\UserCreative\`, this repo will be cloned to `C:\Users\UserCreative\ReReVST-UX-Wrapper`)
