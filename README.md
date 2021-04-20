@@ -105,6 +105,8 @@ pip install wheel
 pip install -r requirements.txt
 ```
 
+![image](https://user-images.githubusercontent.com/1060514/115476438-87874180-a24a-11eb-9764-b5973e7a218a.png)
+
 #### PyTorch install
 
 Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you)
