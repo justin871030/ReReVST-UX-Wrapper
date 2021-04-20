@@ -33,8 +33,8 @@ This repo is a "wrapper repo" basically making the code a bit easier to run, if 
 ### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
 
 ```bash
-git clone https://github.com/petteriTeikari/ReReVST-Code
-cd ReReVST-Code
+git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
+cd ReReVST-UX-Wrapper
 ```
 
 ### Get the pretrained model
@@ -54,7 +54,6 @@ If you do not know what this, you could check for example [Python Virtual Enviro
 
 
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
-
 
 ```
 python3.8 -m venv rerevst_venv_py38
