@@ -206,6 +206,8 @@ python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video_di
 
 _Single video file, batch processed with 4 different style images_
 
+![image](https://user-images.githubusercontent.com/1060514/115477428-89520480-a24c-11eb-8da8-b373e20b9520.png)
+
 ### Optional settings
 
 Additionally there is an `interval` flag that you can increase to `16`, `32` if you run out of RAM (if you high-res or/and long videos). Depends on your laptop/desktop on how much lifting you can do.
