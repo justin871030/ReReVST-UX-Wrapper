@@ -38,6 +38,12 @@ Everything is easier on Ubuntu (Linux), but you should get this working on Windo
 
 3) GO to terminal (Ctrl+Alt+T on Ubuntu) / command window ([Anaconda Prompt](https://problemsolvingwithpython.com/01-Orientation/01.03-Installing-Anaconda-on-Windows/) or [Microsoft Command Prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/), i.e. the black window from the [DOS times](https://en.wikipedia.org/wiki/DOS) from last millennium that maybe Gen Z have never heard of) here and execute **all the following commands from there**.
 
+As an illustration, this is how your commands look like (white console now on my Linux), _note_ the circles on red, when you have activated your virtual environment, so you are not anymore on the `(base)` which is the "system-level Python", i.e. you would installing all those libraries to your "main Anaconda" instead of the virtual environment.
+
+![](doc/linux_install1.png)
+
+![](doc/linux_install2.png)
+
 ### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
 
 Clone in `git` jargon refers to downloading this to your computer, so you will get this `ReReVST-UX-Wrapper` to your computer to the path that you execute the `git clone` from (e.g. if you are on `(base) C:\Users\UserCreative\`, this repo will be cloned to `C:\Users\UserCreative\ReReVST-UX-Wrapper`)
@@ -234,3 +240,7 @@ See the original repository https://github.com/daooshee/ReReVST-Code for instruc
 This repo released pretty much as it is to make casual video style transfer a bit easier as many of the repos out there were so poorly documented and were tricky to get running
 
 ![An Issue](doc/raise_an_issue.jpg)
+
+### Tweaking the repository
+
+You probably want to use the created virtual environment in some IDE then, like in [VS Code](https://code.visualstudio.com/docs/python/environments) or [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)
