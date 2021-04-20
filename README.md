@@ -61,6 +61,8 @@ Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ
 
 And place this `.pth` file to `test/Model` inside your cloned repository `ReReVST-UX-Wrapper`. This is the actual model that stylizes your videos, pretrained by [Wang et al. 2020](https://doi.org/10.1109/TIP.2020.3024018) for you.
 
+![image](https://user-images.githubusercontent.com/1060514/115476255-3414f380-a24a-11eb-884c-82050283d004.png)
+
 ### Virtual environment (on which you run the code)
 
 If you do not know what this, you could check for example [Python Virtual Environments: A Primer
@@ -74,6 +76,10 @@ Create the virtual environment, so this you need to only once. (don't proceed fr
 ```
 python3.8 -m venv rerevst_venv_py38
 ```
+
+This is now created physically inside of the repository folder on your local machine, and it takes some space due to the large PyTorch library
+
+![image](https://user-images.githubusercontent.com/1060514/115476363-63c3fb80-a24a-11eb-82c7-acc320308596.png)
 
 Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment)
 
