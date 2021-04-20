@@ -1,5 +1,7 @@
 # Usability wrapper for ReReVST
 
+This is an "UX wrapper" to make video style transfer a bit easier to do on your videos if you are not a ML engineer/scientist, and the instructions are really detailed because of that. If you are more into artistic / creative uses of video style transfer, and do not know much of code.
+
 Original project from
 
 Wenjing Wang, Shuai Yang, Jizheng Xu, and Jiaying Liu. **"Consistent Video Style Transfer via Relaxation and Regularization"**, _IEEE Trans. on Image Processing (TIP)_, 2020. https://doi.org/10.1109/TIP.2020.3024018 (see [citing papers on Scholar Google](https://scholar.google.co.uk/scholar?cites=4735550302416573229&as_sdt=2005&sciodt=0,5&hl=en))
@@ -26,11 +28,19 @@ This repo is a "wrapper repo" basically making the code a bit easier to run, if 
 
 ### Pre-prerequisites to get this code working on your machine
 
-* Install [Anaconda3](https://www.anaconda.com/products/individual#windows) ([installation instructions](https://docs.anaconda.com/anaconda/install/windows/))
-* Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), if you are `pull`ing this repo (you could just download the zip as well if you really do not know what this is)
-* GO to terminal / command window here and execute the commands from there
+Everything is easier on Ubuntu (Linux), but you should get this working on Windows with a GPU, and on Mac with a CPU.
+
+1) Install [Anaconda3.8 Linux](https://www.anaconda.com/products/individual/download-success) / [Anaconda3.8 Windows](https://www.anaconda.com/products/individual#windows) (This is a Python "By data scientists, for data scientists" in practice, if you are familiar with Python, and have already installed Python from other source, this repo might work as well)
+
+* **Note!** If you are on Windows, the path variable will not be added automatically like on Ubuntu, and you get this famous [`“python” not recognized as a command`](https://stackoverflow.com/questions/7054424/python-not-recognized-as-a-command), so you could for example follow the instructions from [Datacamp](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) on how to add Anaconda to Path (to your environmental variables)
+
+2) Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), if you are `pull`ing this repo (you could just download the zip as well if you really do not know what this is)
+
+3) GO to terminal (Ctrl+Alt+T on Ubuntu) / command window ([Anaconda Prompt](https://problemsolvingwithpython.com/01-Orientation/01.03-Installing-Anaconda-on-Windows/) or [Microsoft Command Prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/), i.e. the black window from the [DOS times](https://en.wikipedia.org/wiki/DOS) from last millennium that maybe Gen Z have never heard of) here and execute **all the following commands from there**.
 
 ### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
+
+Clone in `git` jargon refers to downloading this to your computer, so you will get this `ReReVST-UX-Wrapper` to your computer to the path that you execute the `git clone` from (e.g. if you are on `(base) C:\Users\UserCreative\`, this repo will be cloned to `C:\Users\UserCreative\ReReVST-UX-Wrapper`)
 
 ```bash
 git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
@@ -43,29 +53,49 @@ Download `style_net-TIP-final.pth` [~60MB] from the links provided by the author
 
 Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ3siGIOwUc-Ycu8?usp=sharing), [Baidu Pan](https://pan.baidu.com/s/1Td30bukn2nc4zepmSDs1mA) [397w]
 
-And place this `.pth` file to `test/Model`
+And place this `.pth` file to `test/Model` inside your cloned repository `ReReVST-UX-Wrapper`. This is the actual model that stylizes your videos, pretrained by [Wang et al. 2020](https://doi.org/10.1109/TIP.2020.3024018) for you.
 
 ### Virtual environment (on which you run the code)
 
 If you do not know what this, you could check for example [Python Virtual Environments: A Primer
 ](https://realpython.com/python-virtual-environments-a-primer/) or [What Virtual Environments Are Good For
-](https://realpython.com/lessons/what-virtual-environments-are-good-for/)
-
-
+](https://realpython.com/lessons/what-virtual-environments-are-good-for/). In practice, these are used so that you can easily make other people's code work on your own machine without hours of battling with compatible libraries.
 
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
+Create the virtual environment, so this you need to only once. (don't proceed from here if you get the `“python” not recognized as a command` error, this means that your Anaconda Python is not found from "The Path", and you need to add it there, see some solutions [https://stackoverflow.com/questions/49616399/windows-anaconda-python-is-not-recognized-as-an-internal-or-external-command/55347012#55347012](Windows: Anaconda 'python' is not recognized as an internal or external command on CMD))
+
 ```
 python3.8 -m venv rerevst_venv_py38
+```
+
+Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment)
+
+```
 source rerevst_venv_py38/bin/activate
+```
+
+`Pip` is an "automatic installer", so it downloads you the libraries to be installs, and install them without any browser "Save As" and double-clicking, and we first just upgrade `pip` so that it is on its latest version.
+
+```
 python -m pip install --upgrade pip
+```
+
+Another "low-level" tool, so you can install libraries with [`Wheel`](https://pypi.org/project/wheel/), i.e. from .whl files that you sometimes might see in your installation instructions
+
+```
 pip install wheel
+```
+
+`requirements.txt` is prvided by the person/team who has written the code for you, so it contains a list of the exact library versions that you need to make this code repository to work. If you would just install the latest packages, you might not get this to work (especially if this repository was very old). Using `requirements.txt` ensures that you have exactly the same versions as me (Petteri) when debugging this and trying to make it work. If you improvise with your own versions (either library or Python version), you might not get this to work (and end up wasting your time and get frustrated)
+
+```
 pip install -r requirements.txt
 ```
 
 #### PyTorch install
 
-Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time. 
+Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you)
 
 Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not
 
