@@ -115,7 +115,7 @@ pip install torch torchvision torchaudio
 
 In machine learning jargon, you are now "testing" your model (running inference) after you initially trained it with a bunch of examples. If you just to want to quickly style your videos, you do not care about the training part of the code.
 
-`generate_real_video.py` applies style trasnfer for your input video defined in `--input_video` based on the style in an image `--style_img`.
+`generate_real_video.py` applies style transfer for your input video defined in `--input_video` based on the style in an image `--style_img`.
 
 ### Test that you got this repository running on your computer
 
