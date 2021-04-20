@@ -53,6 +53,10 @@ git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
 cd ReReVST-UX-Wrapper
 ```
 
+_and as apparently [`cd`](https://en.wikipedia.org/wiki/Cd_(command)) was not known by younger population, it used set the active directory to `ReReVST-UX-Wrapper` in this example, as otherwise in the next step you could not install from `requirements.txt` as you would "not be" in that folder and the `requirements.txt` is not found giving you this_
+
+![image](https://user-images.githubusercontent.com/1060514/115476843-58250480-a24b-11eb-83b1-37c69e13159e.png)
+
 ### Get the pretrained model
 
 Download `style_net-TIP-final.pth` [~60MB] from the links provided by the authors of the original repo:
@@ -164,6 +168,8 @@ In machine learning jargon, you are now "testing" your model (running inference)
 ### Test that you got this repository running on your computer
 
 To test the code with the default values and examples given with this repo, 
+
+![image](https://user-images.githubusercontent.com/1060514/115476521-b3a2c280-a24a-11eb-8ae3-6f08899ae194.png)
 
 ```
 cd test
