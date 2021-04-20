@@ -38,7 +38,7 @@ Everything is easier on Ubuntu (Linux), but you should get this working on Windo
 
 3) GO to terminal (Ctrl+Alt+T on Ubuntu) / command window ([Anaconda Prompt](https://problemsolvingwithpython.com/01-Orientation/01.03-Installing-Anaconda-on-Windows/) or [Microsoft Command Prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/), i.e. the black window from the [DOS times](https://en.wikipedia.org/wiki/DOS) from last millennium that maybe Gen Z have never heard of) here and execute **all the following commands from there**.
 
-As an illustration, this is how your commands look like (white console now on my Linux)
+As an illustration, this is how your commands look like (white console now on my Linux), _note_ the circles on red, when you have activated your virtual environment, so you are not anymore on the `(base)` which is the "system-level Python", i.e. you would installing all those libraries to your "main Anaconda" instead of the virtual environment.
 
 ![](doc/linux_install1.png)
 
