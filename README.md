@@ -55,7 +55,7 @@ cd ReReVST-UX-Wrapper
 
 _and as apparently [`cd`](https://en.wikipedia.org/wiki/Cd_(command)) was not known by younger population, it used set the active directory to `ReReVST-UX-Wrapper` in this example, as otherwise in the next step you could not install from `requirements.txt` as you would "not be" in that folder and the `requirements.txt` is not found giving you this_
 
-![image](https://user-images.githubusercontent.com/1060514/115476843-58250480-a24b-11eb-83b1-37c69e13159e.png)
+![image](https://user-images.githubusercontent.com/1060514/115476988-acc87f80-a24b-11eb-9c56-30585bf9746f.png)
 
 ### Get the pretrained model
 
