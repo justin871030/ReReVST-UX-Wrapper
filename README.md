@@ -30,7 +30,7 @@ This repo is a "wrapper repo" basically making the code a bit easier to run, if 
 
 Everything is easier on Ubuntu (Linux), but you should get this working on Windows with a GPU, and on Mac with a CPU.
 
-1) Install [Anaconda3.8 Linux](https://www.anaconda.com/products/individual/download-success) / [Anaconda3.8 Windows](https://www.anaconda.com/products/individual#windows) (This is a Python "By data scientists, for data scientists" in practice, if you are familiar with Python, and have already installed Python from other source, this repo might work as well)
+1) Install [Anaconda3.8 Linux](https://www.anaconda.com/products/individual/download-success) / [Anaconda3.8 Windows](https://www.anaconda.com/products/individual) (This is a Python "By data scientists, for data scientists" in practice, if you are familiar with Python, and have already installed Python from other source, this repo might work as well)
 
 * **Note!** If you are on Windows, the path variable will not be added automatically like on Ubuntu, and you get this famous [`“python” not recognized as a command`](https://stackoverflow.com/questions/7054424/python-not-recognized-as-a-command), so you could for example follow the instructions from [Datacamp](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) on how to add Anaconda to Path (to your environmental variables)
 
