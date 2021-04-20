@@ -240,3 +240,7 @@ See the original repository https://github.com/daooshee/ReReVST-Code for instruc
 This repo released pretty much as it is to make casual video style transfer a bit easier as many of the repos out there were so poorly documented and were tricky to get running
 
 ![An Issue](doc/raise_an_issue.jpg)
+
+### Tweaking the repository
+
+You probably want to use the created virtual environment in some IDE then, like in [VS Code](https://code.visualstudio.com/docs/python/environments) or [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)
