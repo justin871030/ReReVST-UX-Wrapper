@@ -104,9 +104,12 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
     # https://towardsdatascience.com/extracting-audio-from-video-using-python-58856a940fd
     my_clip = mp.VideoFileClip(input_video)
     audio_track = my_clip.audio
-    audio_sampling_freq = audio_track.fps
-    audio_chs = audio_track.nchannels
-    print('Opened the audio of the input video f_sampling = {} Hz, number of channels = {}'.format(audio_sampling_freq, audio_chs))
+    if not audio_track:
+        audio_sampling_freq = audio_track.fps
+        audio_chs = audio_track.nchannels
+        print('Opened the audio of the input video f_sampling = {} Hz, number of channels = {}'.format(audio_sampling_freq, audio_chs))
+    else:
+        print('No audio found from input video')
 
     # TODO! modify here if you do not like the output filename convention
     name = 'ReReVST-' + style_fname + '-' + video_fname
@@ -222,14 +225,16 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
 
     # https://stackoverflow.com/a/48866634
     # https://www.programcreek.com/python/example/105718/moviepy.editor.VideoFileClip
-    print('Reading back the video as the audio was lost, and updating the audio to MP4 with MoviePy')
-    start_time = time.monotonic()
-    saved_mp4_read_back = mp.VideoFileClip(video_path_out_raw)
-    final_clip = saved_mp4_read_back.set_audio(audio_track)
-    final_clip.write_videofile(video_path_out, fps=fps, verbose=False, logger=None)
-    remove_status = os.remove(video_path_out_raw)
-    end_time = time.monotonic()
-    print(' TODO! this quick n dirty audio fix added {} seconds of I/O overhead'.format(timedelta(seconds=end_time - start_time)))
+    if not audio_track:
+        print('Reading back the video as the audio was lost, and updating the audio to MP4 with MoviePy')
+        start_time = time.monotonic()
+        saved_mp4_read_back = mp.VideoFileClip(video_path_out_raw)
+        final_clip = saved_mp4_read_back.set_audio(audio_track)
+        final_clip.write_videofile(video_path_out, fps=fps, verbose=False, logger=None)
+        remove_status = os.remove(video_path_out_raw)
+        end_time = time.monotonic()
+        print(' TODO! this quick n dirty audio fix added {} seconds of I/O overhead'.format(timedelta(seconds=end_time - start_time)))
+            
 
     # to write just the audio
     #audio_path_out = video_path_out.replace('mp4', 'mp3')
