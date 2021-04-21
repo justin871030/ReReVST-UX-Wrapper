@@ -188,6 +188,8 @@ cd test
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
 ```
 
+If you get like the `Pickle - EOFError: Ran out of input` you maybe forgot to download the model `.pth` file, as by default the `.pth` was there, but it was 0 bytes, so just an empty file with the correct name.
+
 Output video is saved to [`results/video`](https://github.com/petteriTeikari/ReReVST-Code/tree/master/results/video)
 
 ![example of VST](doc/exampleVST.png)
