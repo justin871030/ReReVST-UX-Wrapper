@@ -224,7 +224,7 @@ _Single video file, batch processed with 4 different style images_
 
 ### Optional settings
 
-Additionally there is an `interval` flag that you can increase to `16`, `32` if you run out of RAM (if you high-res or/and long videos). Depends on your laptop/desktop on how much lifting you can do.
+Additionally there is an `interval` flag that you can increase to `16`, `32` if you run out of RAM (if you use too high-res or/and too long videos). Depends on your laptop/desktop on how much lifting you can do.
 
 Then, you can find stylized video in `./results/videos/`.
 
