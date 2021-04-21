@@ -81,14 +81,26 @@ Create the virtual environment, so this you need to only once. (don't proceed fr
 python3.8 -m venv rerevst_venv_py38
 ```
 
+_python3.8 - use explicitly Python version 3.8_
+_rerevst_venv_py38 - this now happens to be name of the virtual environment that we are creating, same as the folder name on your disk_
+
 This is now created physically inside of the repository folder on your local machine, and it takes some space due to the large PyTorch library
 
 ![image](https://user-images.githubusercontent.com/1060514/115476363-63c3fb80-a24a-11eb-82c7-acc320308596.png)
 
-Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment)
+Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment, remember when activating, to be on the same path, e.g. `cd c:\Users\Student\ReReVST-UX-Wrapper` if your virtual environment was created inside the repository: `c:\Users\Student\ReReVST-UX-Wrapper\rerevst_venv_py38`)
+
+command in **Linux**:
 
 ```
 source rerevst_venv_py38/bin/activate
+```
+
+command in **Windows** [Pip and virtualenv on Windows](https://programwithus.com/learn/python/pip-virtualenv-windows):
+
+```
+cd Scripts
+activate
 ```
 
 `Pip` is an "automatic installer", so it downloads you the libraries to be installs, and install them without any browser "Save As" and double-clicking, and we first just upgrade `pip` so that it is on its latest version.
@@ -115,7 +127,7 @@ pip install -r requirements.txt
 
 Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you)
 
-Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not
+Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not. See the logic there below, but use now those hard-coded below for your OS (and don't go to Pytorch web site), as this repository is tested with those slightly old versions, and that way it should work for sure. Most likely stuff will work with the latest Pytorch versions as well, but to be safe, use the older versions if you do not want to battle with version incompatibilities. You can later upgrade when you have stuff running first.
 
 ![PyTorch Install](doc/pytorch_install.png)
 
