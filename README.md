@@ -53,6 +53,10 @@ git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
 cd ReReVST-UX-Wrapper
 ```
 
+_and as apparently [`cd`](https://en.wikipedia.org/wiki/Cd_(command)) was not known by younger population, it used set the active directory to `ReReVST-UX-Wrapper` in this example, as otherwise in the next step you could not install from `requirements.txt` as you would "not be" in that folder and the `requirements.txt` is not found giving you this_
+
+![image](https://user-images.githubusercontent.com/1060514/115476988-acc87f80-a24b-11eb-9c56-30585bf9746f.png)
+
 ### Get the pretrained model
 
 Download `style_net-TIP-final.pth` [~60MB] from the links provided by the authors of the original repo:
@@ -60,6 +64,8 @@ Download `style_net-TIP-final.pth` [~60MB] from the links provided by the author
 Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ3siGIOwUc-Ycu8?usp=sharing), [Baidu Pan](https://pan.baidu.com/s/1Td30bukn2nc4zepmSDs1mA) [397w]
 
 And place this `.pth` file to `test/Model` inside your cloned repository `ReReVST-UX-Wrapper`. This is the actual model that stylizes your videos, pretrained by [Wang et al. 2020](https://doi.org/10.1109/TIP.2020.3024018) for you.
+
+![image](https://user-images.githubusercontent.com/1060514/115476255-3414f380-a24a-11eb-884c-82050283d004.png)
 
 ### Virtual environment (on which you run the code)
 
@@ -75,10 +81,26 @@ Create the virtual environment, so this you need to only once. (don't proceed fr
 python3.8 -m venv rerevst_venv_py38
 ```
 
-Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment)
+_python3.8 - use explicitly Python version 3.8_
+_rerevst_venv_py38 - this now happens to be name of the virtual environment that we are creating, same as the folder name on your disk_
+
+This is now created physically inside of the repository folder on your local machine, and it takes some space due to the large PyTorch library
+
+![image](https://user-images.githubusercontent.com/1060514/115476363-63c3fb80-a24a-11eb-82c7-acc320308596.png)
+
+Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment, remember when activating, to be on the same path, e.g. `cd c:\Users\Student\ReReVST-UX-Wrapper` if your virtual environment was created inside the repository: `c:\Users\Student\ReReVST-UX-Wrapper\rerevst_venv_py38`)
+
+command in **Linux**:
 
 ```
 source rerevst_venv_py38/bin/activate
+```
+
+command in **Windows** [Pip and virtualenv on Windows](https://programwithus.com/learn/python/pip-virtualenv-windows):
+
+```
+cd Scripts
+activate
 ```
 
 `Pip` is an "automatic installer", so it downloads you the libraries to be installs, and install them without any browser "Save As" and double-clicking, and we first just upgrade `pip` so that it is on its latest version.
@@ -99,11 +121,13 @@ pip install wheel
 pip install -r requirements.txt
 ```
 
+![image](https://user-images.githubusercontent.com/1060514/115476438-87874180-a24a-11eb-9764-b5973e7a218a.png)
+
 #### PyTorch install
 
 Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you)
 
-Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not
+Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not. See the logic there below, but use now those hard-coded below for your OS (and don't go to Pytorch web site), as this repository is tested with those slightly old versions, and that way it should work for sure. Most likely stuff will work with the latest Pytorch versions as well, but to be safe, use the older versions if you do not want to battle with version incompatibilities. You can later upgrade when you have stuff running first.
 
 ![PyTorch Install](doc/pytorch_install.png)
 
@@ -157,10 +181,14 @@ In machine learning jargon, you are now "testing" your model (running inference)
 
 To test the code with the default values and examples given with this repo, 
 
+![image](https://user-images.githubusercontent.com/1060514/115476521-b3a2c280-a24a-11eb-8ae3-6f08899ae194.png)
+
 ```
 cd test
 python generate_real_video.py --style_img ../inputs/styles/3d_4.jpg --input_video ../inputs/video/scatman.mp4
 ```
+
+If you get like the `Pickle - EOFError: Ran out of input` you maybe forgot to download the model `.pth` file, as by default the `.pth` was there, but it was 0 bytes, so just an empty file with the correct name.
 
 Output video is saved to [`results/video`](https://github.com/petteriTeikari/ReReVST-Code/tree/master/results/video)
 
@@ -191,6 +219,8 @@ python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video_di
 ![example of VST](doc/outputs.png)
 
 _Single video file, batch processed with 4 different style images_
+
+![image](https://user-images.githubusercontent.com/1060514/115477428-89520480-a24c-11eb-8da8-b373e20b9520.png)
 
 ### Optional settings
 
