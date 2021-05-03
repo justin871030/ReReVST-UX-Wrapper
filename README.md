@@ -67,21 +67,15 @@ pip install -r requirements.txt
 
 #### PyTorch install
 
-Here a ~2 GB Pytorch package is installed, so if your internet is poor (like you live in London), this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you)
+Here a ~2 GB Pytorch package is installed, so if your internet is poor, this might take some time (again execute the pip command, it downloads the Pytorch package and installs it for you). 
 
-Choose the proper install depending on your operating system (Ubuntu, Windows, Mac OS), and whether you have NVIDIA GPU or not. See the logic there below, but use now those hard-coded below for your OS (and don't go to Pytorch web site), as this repository is tested with those slightly old versions, and that way it should work for sure. Most likely stuff will work with the latest Pytorch versions as well, but to be safe, use the older versions if you do not want to battle with version incompatibilities. You can later upgrade when you have stuff running first.
-
-![PyTorch Install](doc/pytorch_install.png)
-
-##### Ubuntu
-
-###### GPU (for CUDA 11.1)
+##### GPU (for CUDA 11.1)
 
 ```
 pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
-###### CPU
+##### CPU
 
 ```
 pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
