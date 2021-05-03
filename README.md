@@ -30,30 +30,16 @@ This repo is a "wrapper repo" basically making the code a bit easier to run, if 
 
 Everything is easier on Ubuntu (Linux), but you should get this working on Windows with a GPU, and on Mac with a CPU.
 
-1) Install [Anaconda3.8 Linux](https://www.anaconda.com/products/individual/download-success) / [Anaconda3.8 Windows](https://www.anaconda.com/products/individual) (This is a Python "By data scientists, for data scientists" in practice, if you are familiar with Python, and have already installed Python from other source, this repo might work as well)
-
-* **Note!** If you are on Windows, the path variable will not be added automatically like on Ubuntu, and you get this famous [`“python” not recognized as a command`](https://stackoverflow.com/questions/7054424/python-not-recognized-as-a-command), so you could for example follow the instructions from [Datacamp](https://www.datacamp.com/community/tutorials/installing-anaconda-windows) on how to add Anaconda to Path (to your environmental variables). See even the [short video on this](https://youtu.be/mf5u2chPBjY?t=15m45s)
-
+1) Install [Anaconda3.8 Linux](https://www.anaconda.com/products/individual/download-success)
 2) Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), if you are `pull`ing this repo (you could just download the zip as well if you really do not know what this is)
-
-3) GO to terminal (Ctrl+Alt+T on Ubuntu) / command window ([Anaconda Prompt](https://problemsolvingwithpython.com/01-Orientation/01.03-Installing-Anaconda-on-Windows/) or [Microsoft Command Prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/), i.e. the black window from the [DOS times](https://en.wikipedia.org/wiki/DOS) from last millennium that maybe Gen Z have never heard of) here and execute **all the following commands from there**.
-
-As an illustration, this is how your commands look like (white console now on my Linux), _note_ the circles on red, when you have activated your virtual environment, so you are not anymore on the `(base)` which is the "system-level Python", i.e. you would installing all those libraries to your "main Anaconda" instead of the virtual environment.
-
-![](doc/linux_install1.png)
-
-![](doc/linux_install2.png)
+3) GO to terminal (Ctrl+Alt+T on Ubuntu)
 
 ### [Clone](https://medium.com/@madebymade/github-for-dummies-96f753f96a59) this repository
-
-Clone in `git` jargon refers to downloading this to your computer, so you will get this `ReReVST-UX-Wrapper` to your computer to the path that you execute the `git clone` from (e.g. if you are on `(base) C:\Users\UserCreative\`, this repo will be cloned to `C:\Users\UserCreative\ReReVST-UX-Wrapper`)
 
 ```bash
 git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
 cd ReReVST-UX-Wrapper
 ```
-
-_and as apparently [`cd`](https://en.wikipedia.org/wiki/Cd_(command)) was not known by younger population, it used set the active directory to `ReReVST-UX-Wrapper` in this example, as otherwise in the next step you could not install from `requirements.txt` as you would "not be" in that folder and the `requirements.txt` is not found giving you this_
 
 ![image](https://user-images.githubusercontent.com/1060514/115476988-acc87f80-a24b-11eb-9c56-30585bf9746f.png)
 
@@ -65,8 +51,6 @@ Links: [Google Drive](https://drive.google.com/drive/folders/1RSmjqZTon3QdxBUSjZ
 
 And place this `.pth` file to `test/Model` inside your cloned repository `ReReVST-UX-Wrapper`. This is the actual model that stylizes your videos, pretrained by [Wang et al. 2020](https://doi.org/10.1109/TIP.2020.3024018) for you.
 
-![image](https://user-images.githubusercontent.com/1060514/115476255-3414f380-a24a-11eb-884c-82050283d004.png)
-
 ### Virtual environment (on which you run the code)
 
 If you do not know what this, you could check for example [Python Virtual Environments: A Primer
@@ -75,53 +59,13 @@ If you do not know what this, you could check for example [Python Virtual Enviro
 
 #### GPU (assuming you have NVIDIA's GPU and it is okay with [CUDA 11.1](https://developer.nvidia.com/cuda-11.1.0-download-archive))
 
-Create the virtual environment, so this you need to only once. (don't proceed from here if you get the `“python” not recognized as a command` error, this means that your Anaconda Python is not found from "The Path", and you need to add it there, see some solutions [https://stackoverflow.com/questions/49616399/windows-anaconda-python-is-not-recognized-as-an-internal-or-external-command/55347012#55347012](Windows: Anaconda 'python' is not recognized as an internal or external command on CMD))
-
 ```
 python3.8 -m venv rerevst_venv_py38
-```
-
-_python3.8 - use explicitly Python version 3.8_
-_rerevst_venv_py38 - this now happens to be name of the virtual environment that we are creating, same as the folder name on your disk_
-
-This is now created physically inside of the repository folder on your local machine, and it takes some space due to the large PyTorch library
-
-![image](https://user-images.githubusercontent.com/1060514/115476363-63c3fb80-a24a-11eb-82c7-acc320308596.png)
-
-Activate now the virtual environment (so if you for example power off your laptop, and you want to work again with this virtual environment and on this video style transfer, remember to always activate this specific virtual environment, remember when activating, to be on the same path, e.g. `cd c:\Users\Student\ReReVST-UX-Wrapper` if your virtual environment was created inside the repository: `c:\Users\Student\ReReVST-UX-Wrapper\rerevst_venv_py38`)
-
-command in **Linux**:
-
-```
 source rerevst_venv_py38/bin/activate
-```
-
-command in **Windows** [Pip and virtualenv on Windows](https://programwithus.com/learn/python/pip-virtualenv-windows):
-
-```
-cd Scripts
-activate
-```
-
-`Pip` is an "automatic installer", so it downloads you the libraries to be installs, and install them without any browser "Save As" and double-clicking, and we first just upgrade `pip` so that it is on its latest version.
-
-```
 python -m pip install --upgrade pip
-```
-
-Another "low-level" tool, so you can install libraries with [`Wheel`](https://pypi.org/project/wheel/), i.e. from .whl files that you sometimes might see in your installation instructions
-
-```
 pip install wheel
-```
-
-`requirements.txt` is prvided by the person/team who has written the code for you, so it contains a list of the exact library versions that you need to make this code repository to work. If you would just install the latest packages, you might not get this to work (especially if this repository was very old). Using `requirements.txt` ensures that you have exactly the same versions as me (Petteri) when debugging this and trying to make it work. If you improvise with your own versions (either library or Python version), you might not get this to work (and end up wasting your time and get frustrated)
-
-```
 pip install -r requirements.txt
 ```
-
-![image](https://user-images.githubusercontent.com/1060514/115476438-87874180-a24a-11eb-9764-b5973e7a218a.png)
 
 #### PyTorch install
 
@@ -145,32 +89,6 @@ pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f htt
 pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
-##### Windows
-
-###### GPU (for CUDA 11.1)
-
-```
-pip install torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio===0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
-```
-
-###### CPU
-
-```
-pip install torch==1.8.0+cpu torchvision==0.9.0+cpu torchaudio===0.8.0 -f https://download.pytorch.org/whl/torch_stable.html
-```
-
-##### MacOS
-
-###### GPU
-
-You need to [install from PyTorch sources](https://github.com/pytorch/pytorch#from-source), if you want to run this on GPU.
-
-###### CPU
-
-```
-pip install torch torchvision torchaudio
-```
-
 ## Using the repository to style your image
 
 In machine learning jargon, you are now "testing" your model (running inference) after you initially trained it with a bunch of examples. If you just to want to quickly style your videos, you do not care about the training part of the code.
@@ -179,9 +97,7 @@ In machine learning jargon, you are now "testing" your model (running inference)
 
 ### Test that you got this repository running on your computer
 
-To test the code with the default values and examples given with this repo, 
-
-![image](https://user-images.githubusercontent.com/1060514/115476521-b3a2c280-a24a-11eb-8ae3-6f08899ae194.png)
+To test the code with the default values and examples given with this repo: 
 
 ```
 cd test
@@ -219,8 +135,6 @@ python generate_real_video.py --style_img_dir ../inputs/styles/ --input_video_di
 ![example of VST](doc/outputs.png)
 
 _Single video file, batch processed with 4 different style images_
-
-![image](https://user-images.githubusercontent.com/1060514/115477428-89520480-a24c-11eb-8da8-b373e20b9520.png)
 
 ### Optional settings
 
@@ -264,12 +178,6 @@ Prcessing as a whole took 0:00:19.874647
 ### On how to train the model with your custom data
 
 See the original repository https://github.com/daooshee/ReReVST-Code for instructions
-
-### Raising [an issue](https://www.stevejgordon.co.uk/working-on-your-first-github-issue)
-
-This repo released pretty much as it is to make casual video style transfer a bit easier as many of the repos out there were so poorly documented and were tricky to get running
-
-![An Issue](doc/raise_an_issue.jpg)
 
 ### Tweaking the repository
 
