@@ -41,8 +41,6 @@ git clone https://github.com/petteriTeikari/ReReVST-UX-Wrapper
 cd ReReVST-UX-Wrapper
 ```
 
-![image](https://user-images.githubusercontent.com/1060514/115476988-acc87f80-a24b-11eb-9c56-30585bf9746f.png)
-
 ### Get the pretrained model
 
 Download `style_net-TIP-final.pth` [~60MB] from the links provided by the authors of the original repo:
