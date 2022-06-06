@@ -76,7 +76,18 @@ class ReshapeTool():
         return new_img
 
 
+def resize(image, max_resolution=1000000):
+    resolution = max(image.shape[0], image.shape[1])
+    if resolution > max_resolution:
+        ratio = (resolution // 240) + 1
+        return cv2.resize(image, (image.shape[1]//ratio, image.shape[0]//ratio))
+    return image
 
+# def cvt_b(image, resize=None):
+#     image[..., 2], image[..., 1], image[..., 0] = image[..., 0], image[..., 1], image[..., 2]
+#     if False and resize:
+#         image = cv2.resize(image, (image.shape[1]//resize, image.shape[0]//resize), interpolation=cv2.INTER_AREA)
+#     return image
 
 ## -------------------
 ##  Preparation
@@ -114,9 +125,7 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
 
 
     # TODO! modify here if you do not like the output filename convention
-    name = 'ReReVST-' + style_fname + '-' + video_fname
-    if not use_Global:
-        name = name + '-no-global'
+    name = 'ReReVST-' + ('' if use_Global else 'no-global-') + style_fname + '-' + video_fname
 
     # Build model
     start_time = time.monotonic()
@@ -169,7 +178,7 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
         for i, frame in enumerate(video):
             if i in indices or i == frame_num-1: # add the last frame always (from original code)
                 no_of_frames_added += 1
-                framework.add(frame)
+                framework.add(resize(frame[..., ::-1]))
 
         if no_of_frames_added != sample_sum+1:
             print(' -- for some reason reason you did not add all the frames picked to be added?')
@@ -193,6 +202,8 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
     #  to get rid of the unnecessary disk writes that start to slow down things especially on large clips
     for i, frame in tqdm(enumerate(video)):
 
+        frame = resize(frame[..., ::-1])
+
         # Crop the image
         H,W,C = frame.shape
         new_input_frame = reshape.process(frame)
@@ -214,7 +225,7 @@ def process_video(style_img, input_video, interval = 8, write_frames_to_disk = F
 
         # add to the output video
         # https://imageio.readthedocs.io/en/stable/examples.html
-        writer.append_data(styled_input_frame)
+        writer.append_data(styled_input_frame[..., ::-1])
 
     writer.close()
     end_time = time.monotonic()
@@ -272,7 +283,7 @@ if __name__ == "__main__":
     parser.add_argument('-input_video', '--input_video', type=str, default=None, #'../inputs/video/scatman.mp4',
                         help='Video input that you want to style (e.g. MP4)')
     parser.add_argument('-input_video_dir', '--input_video_dir', type=str,
-                        default='../inputs/video/',
+                        default=None,
                         help='Directory of all your videos to be stylized (batch processing multiple videos)')
     parser.add_argument('-write_frames_to_disk', '--write_frames_to_disk', type=bool, default=False,
                         help='Writes the frames to disk as well')
@@ -282,7 +293,12 @@ if __name__ == "__main__":
                              "but if you large videos with big resolutions, you might need to ")
     parser.add_argument('-force_on_CPU', '--force_on_CPU', type=bool, default=False,
                         help='Process on CPU instead of GPU')
+    parser.add_argument('-not_use_global', '--not_use_global', type=bool, default=True,
+                        help='Not using Global Feature Sharing')
     args = parser.parse_args()
+
+    if args.not_use_global:
+        use_Global = False
 
     # Define what video files we are going to process
     if not args.input_video_dir:

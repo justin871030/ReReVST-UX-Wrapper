@@ -67,9 +67,9 @@ class Stylization():
         # ===== Framework =====
 
         if use_Global:
-            from style_network_global import TransformerNet
+            from .style_network_global import TransformerNet
         else:
-            from style_network_frame import TransformerNet
+            from .style_network_frame import TransformerNet
         
         self.model = TransformerNet().to(self.device)
         self.model.load_state_dict(torch.load(checkpoint, map_location=lambda storage, loc: storage))
